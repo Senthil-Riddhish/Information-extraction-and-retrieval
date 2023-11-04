@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Document Form</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background-color: #28A745;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Document Form</h1>
+        <form action="/" method="POST">
+            <label for="numDocuments">Number of Documents:</label>
+            <input type="number" name="numDocuments" id="numDocuments" required>
+            <br>
+            <button type="button" id="generateFields">Generate Document Fields</button>
+            <br>
+            <label for="query">Query:</label>
+            <input type="text" name="query" id="query" required>
+            <br>
+
+            <div id="documentFields">
+                <!-- Dynamically generated document textareas will be placed here -->
+            </div>
+            <button type="submit">Calculate</button>
+            <h2>Document Rankings:</h2>
+            <ul>
+                {% for doc, rank in document_rank.items() %}
+                <li>Document {{ doc }}: {{ rank }}</li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("generateFields").addEventListener("click", function () {
+            const numDocuments = document.getElementById("numDocuments").value;
+            const documentFields = document.getElementById("documentFields");
+
+            documentFields.innerHTML = "";
+
+            for (let i = 1; i <= numDocuments; i++) {
+                const label = document.createElement("label");
+                label.htmlFor = "document" + i;
+                label.textContent = "Document " + i + ": ";
+
+                const textarea = document.createElement("textarea");
+                textarea.name = "document" + i;
+                textarea.id = "document" + i;
+                textarea.required = true;
+
+                documentFields.appendChild(label);
+                documentFields.appendChild(textarea);
+                documentFields.appendChild(document.createElement("br"));
+            }
+        });
+    </script>
+</body>
+
+</html>
