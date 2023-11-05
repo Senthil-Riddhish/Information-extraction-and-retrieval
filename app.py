@@ -85,5 +85,5 @@ def calculate():
 
     return render_template('index.html', documents=documents, query=query, document_rank=document_rank)
 
-if __name__ == '__main__':
-    app.run(debug=True,port=0)
+#if __name__ == '__main__':
+#    app.run(debug=True)
